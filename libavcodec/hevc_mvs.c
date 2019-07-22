@@ -307,8 +307,8 @@ static void derive_spatial_merge_candidates(HEVCContext *s, int x0, int y0,
     const int xB1    = x0 + nPbW - 1;
     const int yB1    = y0 - 1;
 
-    const int xB0    = x0 + nPbW;
-    const int yB0    = y0 - 1;
+    const int xb0    = x0 + nPbW;
+    const int yb0    = y0 - 1;
 
     const int xA0    = x0 - 1;
     const int yA0    = y0 + nPbH;
@@ -365,14 +365,14 @@ static void derive_spatial_merge_candidates(HEVCContext *s, int x0, int y0,
     }
 
     // above right spatial merge candidate
-    is_available_b0 = AVAILABLE(cand_up_right, B0) &&
-                      xB0 < s->ps.sps->width &&
-                      PRED_BLOCK_AVAILABLE(B0) &&
-                      !is_diff_mer(s, xB0, yB0, x0, y0);
+    is_available_b0 = AVAILABLE(cand_up_right, b0) &&
+                      xb0 < s->ps.sps->width &&
+                      PRED_BLOCK_AVAILABLE(b0) &&
+                      !is_diff_mer(s, xb0, yb0, x0, y0);
 
     if (is_available_b0 &&
-        !(is_available_b1 && COMPARE_MV_REFIDX(B0, B1))) {
-        mergecandlist[nb_merge_cand] = TAB_MVF_PU(B0);
+        !(is_available_b1 && COMPARE_MV_REFIDX(b0, B1))) {
+        mergecandlist[nb_merge_cand] = TAB_MVF_PU(b0);
         if (merge_idx == nb_merge_cand)
             return;
         nb_merge_cand++;
@@ -596,7 +596,7 @@ void ff_hevc_luma_mv_mvp_mode(HEVCContext *s, int x0, int y0, int nPbW,
     int is_available_a0;
     int xA1, yA1;
     int is_available_a1;
-    int xB0, yB0;
+    int xb0, yb0;
     int is_available_b0;
     int xB1, yB1;
     int is_available_b1;
@@ -677,12 +677,12 @@ void ff_hevc_luma_mv_mvp_mode(HEVCContext *s, int x0, int y0, int nPbW,
 b_candidates:
     // B candidates
     // above right spatial merge candidate
-    xB0    = x0 + nPbW;
-    yB0    = y0 - 1;
+    xb0    = x0 + nPbW;
+    yb0    = y0 - 1;
 
-    is_available_b0 =  AVAILABLE(cand_up_right, B0) &&
-                       xB0 < s->ps.sps->width &&
-                       PRED_BLOCK_AVAILABLE(B0);
+    is_available_b0 =  AVAILABLE(cand_up_right, b0) &&
+                       xb0 < s->ps.sps->width &&
+                       PRED_BLOCK_AVAILABLE(b0);
 
     // above spatial merge candidate
     xB1    = x0 + nPbW - 1;
@@ -696,10 +696,10 @@ b_candidates:
 
     // above right spatial merge candidate
     if (is_available_b0) {
-        if (MP_MX(B0, pred_flag_index_l0, mxB)) {
+        if (MP_MX(b0, pred_flag_index_l0, mxB)) {
             goto scalef;
         }
-        if (MP_MX(B0, pred_flag_index_l1, mxB)) {
+        if (MP_MX(b0, pred_flag_index_l1, mxB)) {
             goto scalef;
         }
     }
@@ -735,9 +735,9 @@ scalef:
 
         // XB0 and L1
         if (is_available_b0) {
-            availableFlagLXB0 = MP_MX_LT(B0, pred_flag_index_l0, mxB);
+            availableFlagLXB0 = MP_MX_LT(b0, pred_flag_index_l0, mxB);
             if (!availableFlagLXB0)
-                availableFlagLXB0 = MP_MX_LT(B0, pred_flag_index_l1, mxB);
+                availableFlagLXB0 = MP_MX_LT(b0, pred_flag_index_l1, mxB);
         }
 
         if (is_available_b1 && !availableFlagLXB0) {
