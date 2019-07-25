@@ -19,18 +19,23 @@ export ADDI_CFLAGS="-marm"
         --enable-shared \
         --disable-static \
         --disable-yasm \
-        --disable-symver \
         --enable-gpl \
         --disable-ffmpeg \
         --disable-ffplay \
         --disable-ffprobe \
         --disable-ffserver \
         --disable-doc \
-        --disable-symver \
         --cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \
         --enable-cross-compile \
+        --disable-stripping \
+        --disable-asm \
+        --enable-jni \
+        --target-os=android \
+        --enable-mediacodec \
+        --enable-decoder=h264_mediacodec \
+        --enable-hwaccel=h264_mediacodec \
         --sysroot=$SYSROOT \
-        --extra-cflags="-Os -fpic $ADDI_CFLAGS" \
+        --extra-cflags="-g -fpic $ADDI_CFLAGS" \
         --extra-ldflags="$ADDI_CFLAGS" \
         $ADDITIONAL_CONFIGURE_FLAG
 make clean
